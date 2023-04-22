@@ -32,6 +32,9 @@ keymap.set("n", "<leader>rc", ":e C:/Users/雨夜曼彻斯特/AppData/Local/nvim
 -- 将当前buffer所在目录路径设置为工作路径
 keymap.set("n", "<leader>cd", ":lcd %:p:h<CR>")
 
+-- quickfix
+keymap.set("n", "<leader><C-q>", ":copen<CR>", opts)
+keymap.set("n", "<leader><C-w>", ":cclose<CR>", opts)
 
 -- 窗口
 keymap.set("n", "<leader>sl", "<C-w>v")
