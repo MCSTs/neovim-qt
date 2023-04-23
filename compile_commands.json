@@ -1,0 +1,12 @@
+[
+  {
+    "directory": "D:/c_project",
+    "command": "clang -c -I D:/c_project/usr/arm-none-linux-gnueabi/sysroot/usr/include -o main.o main.c",
+    "file": "main.c"
+  },
+  {
+    "directory": "D:/c_project",
+    "command": "clang -c -I D:/c_project/usr/arm-none-linux-gnueabi/sysroot/usr/include -o demo.o demo.c",
+    "file": "demo.c"
+  }
+]

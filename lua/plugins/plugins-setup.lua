@@ -130,8 +130,12 @@ return require("packer").startup(function(use)
 	-- "williamboman/mason.nvim", -- in charge of managing lsp servers, linters & formatters
 	-- "williamboman/mason-lspconfig.nvim", -- bridges gap b/w mason & lspconfig
 	-- "neovim/nvim-lspconfig", -- easily configure language servers
- --  })
- --  use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
+  --  })
+  --  use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
+
+  -- coc.nvim
+  use {'neoclide/coc.nvim', branch = 'release'}
+
 
   -- autocompletion
   -- use("hrsh7th/nvim-cmp") -- completion plugin

@@ -1,7 +1,7 @@
 -->主题
 
 -->
--- 1.tokyonight
+--[[ 1.tokyonight
 -->
 require("tokyonight").setup({
   style = "storm", --`storm`, `moon`, or `night` and `day`
@@ -19,7 +19,7 @@ require("tokyonight").setup({
   day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
 })
 -- ]] --
-vim.cmd [[colorscheme tokyonight-storm]]
+-- vim.cmd [[colorscheme tokyonight-storm]]
 
 
 
@@ -52,7 +52,7 @@ require("catppuccin").setup({
 
 
 -->
---[[ 4.github-nvim-theme
+-- 4.github-nvim-theme
 -->
 require("github-theme").setup({
   -- theme_style = "dark",
@@ -72,8 +72,8 @@ require("github-theme").setup({
   --   }
   -- end
 })
-]] --
--- vim.cmd [[colorscheme github_dark]]
+-- ]] --
+vim.cmd [[colorscheme github_dimmed]]
 
 
 
