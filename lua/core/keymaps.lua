@@ -118,7 +118,7 @@ keymaps = {
 ]]--
 
 -- 文件大纲
--- keymap.set("n", "<leader>p", ":SymbolsOutline<CR>")
+keymap.set("n", "<leader>p", ":CocOutline<CR>")
 
 -- 窗口尺寸聚焦
 keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>", opts)
