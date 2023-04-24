@@ -26,7 +26,10 @@ set(TOTAL
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # 添加项目的宏定义
-add_compile_definitions(STM32F40_41xxx USE_STDPERIPH_DRIVER)
+# standard lib:
+# add_compile_definitions(STM32F40_41xxx USE_STDPERIPH_DRIVER)
+# hal lib:
+# add_compile_definitions(__CC_ARM STM32F103xE USE_HAL_DRIVER)
 
 
 #6.add executable file，添加要编译的可执行文件
