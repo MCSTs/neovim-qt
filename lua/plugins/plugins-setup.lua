@@ -123,6 +123,15 @@ return require("packer").startup(function(use)
   --markdown
   use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
+  --harpoon
+  use('ThePrimeagen/harpoon')
+
+  -- undotree
+  use('mbbill/undotree')
+
+  -- automaton
+  use('Eandrju/cellular-automaton.nvim')
+
 
   --> 3.LSP, 补全snippets, 管理 <--
   -- nvim-lsp, Mason管理

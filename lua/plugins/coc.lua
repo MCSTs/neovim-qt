@@ -4,11 +4,39 @@ vim.opt.writebackup = false
 
 -- Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
 -- delays and poor user experience
-vim.opt.updatetime = 300
+vim.opt.updatetime = 100
 
 -- Always show the signcolumn, otherwise it would shift the text each time
 -- diagnostics appeared/became resolved
 vim.opt.signcolumn = "yes"
+
+vim.g.coc_global_extensions = {
+  'coc-css',
+  'coc-docker',
+  'coc-eslint',
+  'coc-flutter-tools',
+  'coc-import-cost',
+  'coc-lists',
+  'coc-omnisharp',
+  'coc-prettier',
+  'coc-prisma',
+  'coc-stylelint',
+  'coc-tasks',
+  'coc-vimlsp',
+  'coc-translator',
+  'coc-syntax',
+  'coc-sourcekit',
+  'coc-snippets',
+  'coc-pyright',
+  'coc-markdownlint',
+  'coc-json',
+  'coc-html',
+  'coc-gitignore',
+  'coc-git',
+  'coc-diagnostic',
+  'coc-cmake',
+  'coc-clangd'
+}
 
 local keyset = vim.keymap.set
 -- Autocomplete
@@ -37,13 +65,13 @@ keyset("i", "<c-k>", "coc#refresh()", {silent = true, expr = true})
 
 -- Use `g[` and `g]` to navigate diagnostics
 -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
-keyset("n", "g[", "<Plug>(coc-diagnostic-prev)", {silent = true})
-keyset("n", "g]", "<Plug>(coc-diagnostic-next)", {silent = true})
+keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
+keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
 
 -- GoTo code navigation
 keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
 keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+-- keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
 
 
@@ -69,6 +97,10 @@ vim.api.nvim_create_autocmd("CursorHold", {
     desc = "Highlight symbol under cursor on CursorHold"
 })
 
+-- CocCommand open
+keyset("n", "<C-c>", ":CocCommand<CR>", {silent = true, desc = "Open CocCommand"})
+-- CocList open
+keyset("n", "<leader>cl", ":CocList<CR>", {silent = true, desc = "Open CocList"})
 
 -- Symbol renaming
 keyset("n", "<leader>rn", "<Plug>(coc-rename)", {silent = true})
@@ -97,9 +129,17 @@ vim.api.nvim_create_autocmd("User", {
 
 -- Apply codeAction to the selected region
 -- Example: `<leader>aap` for current paragraph
--- local opts = {silent = true, nowait = true}
--- keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
--- keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
+local opts = {silent = true, nowait = true}
+
+function cocActionsOpenFromSelected(type)
+  vim.cmd('CocCommand actions.open ' .. type)
+end
+keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", 
+  {silent = true, nowait = true, desc = "Code action select"}
+)
+keyset("n", "<leader>aw", "<Plug>(coc-codeaction-selected)w",
+  {silent = true, nowait = true, desc = "Code action current world"}
+)
 
 -- Remap keys for apply code actions at the cursor position.
 -- keyset("n", "<leader>ac", "<Plug>(coc-codeaction-cursor)", opts)
@@ -107,11 +147,14 @@ vim.api.nvim_create_autocmd("User", {
 -- keyset("n", "<leader>as", "<Plug>(coc-codeaction-source)", opts)
 -- Remap keys for applying codeActions to the current buffer
 -- keyset("n", "<leader>ac", "<Plug>(coc-codeaction)", opts)
+
 -- Apply the most preferred quickfix action on the current line.
--- keyset("n", "<leader>qf", "<Plug>(coc-fix-current)", opts)
+keyset("n", "<leader>fl", "<Plug>(coc-fix-current)", 
+  {silent = true, nowait = true, desc = "quickfix current line"}
+)
 
 -- Remap keys for apply refactor code actions.
--- keyset("n", "<leader>re", "<Plug>(coc-codeaction-refactor)", { silent = true })
+-- keyset("n", "<leader>lf", "<Plug>(coc-codeaction-refactor)", { silent = true })
 -- keyset("x", "<leader>r", "<Plug>(coc-codeaction-refactor-selected)", { silent = true })
 -- keyset("n", "<leader>r", "<Plug>(coc-codeaction-refactor-selected)", { silent = true })
 
@@ -121,12 +164,12 @@ vim.api.nvim_create_autocmd("User", {
 
 -- Map function and class text objects
 -- NOTE: Requires 'textDocument.documentSymbol' support from the language server
--- keyset("x", "if", "<Plug>(coc-funcobj-i)", opts)
--- keyset("o", "if", "<Plug>(coc-funcobj-i)", opts)
+-- keyset("x", "kf", "<Plug>(coc-funcobj-i)", opts)
 -- keyset("x", "af", "<Plug>(coc-funcobj-a)", opts)
+-- keyset("o", "kf", "<Plug>(coc-funcobj-i)", opts)
 -- keyset("o", "af", "<Plug>(coc-funcobj-a)", opts)
--- keyset("x", "ic", "<Plug>(coc-classobj-i)", opts)
--- keyset("o", "ic", "<Plug>(coc-classobj-i)", opts)
+-- keyset("x", "kc", "<Plug>(coc-classobj-i)", opts)
+-- keyset("o", "kc", "<Plug>(coc-classobj-i)", opts)
 -- keyset("x", "ac", "<Plug>(coc-classobj-a)", opts)
 -- keyset("o", "ac", "<Plug>(coc-classobj-a)", opts)
 
@@ -152,17 +195,18 @@ vim.api.nvim_create_autocmd("User", {
 
 -- Add `:Format` command to format current buffer
 vim.api.nvim_create_user_command("Format", "call CocAction('format')", {})
+keyset("n", "<leader>lf", ":Format<CR>", {silent = true, desc = "Format all buffer"})
 
 -- " Add `:Fold` command to fold current buffer
-vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", {nargs = '?'})
+-- vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", {nargs = '?'})
 
 -- Add `:OR` command for organize imports of the current buffer
-vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
+-- vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
 
 -- Add (Neo)Vim's native statusline support
 -- NOTE: Please see `:h coc-status` for integrations with external plugins that
 -- provide custom statusline: lightline.vim, vim-airline
-vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
+-- vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
 
 -- Mappings for CoCList
 -- code actions and coc stuff

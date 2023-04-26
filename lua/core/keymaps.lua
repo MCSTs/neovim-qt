@@ -3,7 +3,8 @@ vim.g.mapleader = " "
 local keymap = vim.keymap
 local opts = { silent = true, noremap = true }
 
-keymap.set("n", "s", "<NOP>", opts)
+keymap.set("n", "s", "<NOP>")
+keymap.set("n", "Q", "<NOP>")
 
 -- switch case with '`' key
 keymap.set("n", "`", "~")
@@ -21,16 +22,20 @@ keymap.set("i", "jk", "<ESC>")
 --
 -- 单行或多行移动
 keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-keymap.set("v", "K", ":m '>-2<CR>gv=gv")
+keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 --
 --->> 正常模式 <<---
 --
 -- 转到init.lua文件
-keymap.set("n", "<leader>rc", ":e C:/Users/雨夜曼彻斯特/AppData/Local/nvim/init.lua<CR>")
+keymap.set("n", "<leader>rc", ":e C:/Users/雨夜曼彻斯特/AppData/Local/nvim/init.lua<CR>",
+  { silent = true, noremap = true, desc = "Open init.lua file"}
+)
 
 -- 将当前buffer所在目录路径设置为工作路径
-keymap.set("n", "<leader>cd", ":lcd %:p:h<CR>")
+keymap.set("n", "<leader>cd", ":lcd %:p:h<CR>",
+  { silent = true, noremap = true, desc = "Set the directory path of the current buffer to the working path"}
+)
 
 -- quickfix
 keymap.set("n", "<leader><C-q>", ":copen<CR>", opts)
@@ -64,9 +69,13 @@ keymap.set("n", "<leader>\\", "<C-^>")
 -- 行首行尾移动
 keymap.set("n", "W", "0")
 keymap.set("n", "E", "$")
+keymap.set("v", "W", "0")
+keymap.set("v", "E", "$")
 
--- 删除当前buffer
-keymap.set("n", "<leader>D", ":bdelete<CR>")
+-- delete buffer
+keymap.set("n", "<leader>D", ":%bd<CR>", {desc = "Delete all buffers"})
+keymap.set("n", "<leader>d", ":bd<CR>", {desc = "Delete current buffer"})
+
 
 -- 窗口尺寸
 keymap.set("n", "<up>", ":res +5<CR>")
@@ -83,7 +92,7 @@ keymap.set("n", "<right>", ":vertical resize+5<CR>")
 keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 
 -- vim-floaterm
-keymap.set("n", "<leader>t", ":FloatermToggle<CR>")
+keymap.set("n", "<leader>t", ":FloatermToggle<CR>", {desc = "Open floaterm"})
 keymap.set("t", "<C-t>", "<C-\\><C-n>:FloatermToggle<CR>")
 --local commandc = ":FloatermNew! cc % -o %< -Wall -g && ./%<<CR>"
 --local commandcpp = ":FloatermNew! c++ % -o %< -Wall -g && ./%<<CR>"
@@ -118,14 +127,17 @@ keymaps = {
 ]]--
 
 -- 文件大纲
-keymap.set("n", "<leader>p", ":CocOutline<CR>")
+keymap.set("n", "<leader>p", ":CocOutline<CR>", {desc = "Open file outline"})
 
 -- 窗口尺寸聚焦
-keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>", opts)
+keymap.set("n", "<leader>sm", ":MaximizerToggle<CR>", {desc = "(Toggle)Maximum current window"})
 
 -- Markdown preview
-keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<CR>", opts)
-
+keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<CR>", 
+  { silent = true, noremap = true, desc = "Toggle markdown preview"}
+)
 -- Table mode
-keymap.set("n", "<leader>mt", ":TableModeToggle<CR>", opts)
+keymap.set("n", "<leader>mt", ":TableModeToggle<CR>", 
+  { silent = true, noremap = true, desc = "Toggle table mode"}
+)
 
